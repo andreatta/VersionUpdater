@@ -4,6 +4,20 @@ Copyright © 2021 cee cee@ik.me
 This work is free. You can redistribute it and/or modify it under the
 terms of the Do What The Fuck You Want To Public License, Version 2,
 as published by Sam Hocevar. See http://www.wtfpl.net/ for more details.
+
+Example of version file:
+
+--- version.c
+#ifndef VERSION_H
+#define VERSION_H
+
+char VERSION[]     = "0.0.1";
+char BUILD_DATE[]  = "xxx";
+char GIT_SHA[]     = "xxx";
+
+#endif // VERSION_H
+---
+
 """
 
 import fileinput
@@ -12,7 +26,7 @@ import re
 import os
 from datetime import date
 
-FILENAME     = "version.h"
+FILENAME     = "version.c"
 VERSIONMATCH = "VERSION"
 GITMATCH     = "GIT_SHA"
 DATEMATCH    = "BUILD_DATE"
