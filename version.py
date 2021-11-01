@@ -47,11 +47,14 @@ def main():
     path = os.path.dirname(os.path.realpath(__file__))
     filepath = os.path.join(path, FILENAME)
     print(filepath)
-    # Get git short hash
-    shashort = ''
-    repo = git.Repo(search_parent_directories=True)
-    if repo:
-        shashort = repo.git.rev_parse(repo.head, short=True)
+
+    if os.path.isdir('.git'):        
+        # Get git short hash
+        repo = git.Repo(search_parent_directories=True)
+        if repo:
+            shashort = repo.git.rev_parse(repo.head, short=True)
+    else:
+        shashort = "NOT A GIT REPO"
 
     # Builddate
     builddate = date.today().strftime("%Y-%m-%d")
