@@ -1,8 +1,21 @@
-#ifndef VERSION_H
-#define VERSION_H
+#pragma once
 
-extern char VERSION[];
-extern char BUILD_DATE[];
-extern char GIT_SHA[];
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-#endif // VERSION_H
+#ifndef VERSION
+#define VERSION    "0.3.3"
+#endif
+
+#ifndef BUILD_DATE
+#define BUILD_DATE "2021-11-09"
+#endif
+
+#ifndef GIT_SHA
+#define GIT_SHA    "ceecee3"
+#endif
+
+#ifdef __cplusplus
+}
+#endif
