@@ -55,34 +55,36 @@ VERSIONMATCH = "VERSION"
 VERSIONHEXMATCH = "VERSIONHEX"
 GITMATCH = "GIT_SHA"
 DATEMATCH = "BUILD_DATE"
+MAXVERSION = 99
 DEBUG = False
 
 
-def versionsplit(version):    
+def versionsplit(version):
     v_array = []
-    
+
     if len(version) > 0:
         v_array = version[-1].split('.')
-        
+
         if len(v_array) >= 3:
             build = int(v_array[-1])
             minor = int(v_array[-2])
             major = int(v_array[-3])
 
-            if build < 0xff:
+            if build < MAXVERSION:
                 build += 1
             else:
                 build = 0
-                if minor < 0xff:
+                if minor < MAXVERSION:
                     minor += 1
                 else:
+                    build = 0
                     minor = 0
                     major += 1
 
             v_array[-1] = build
             v_array[-2] = minor
             v_array[-3] = major
-        
+
     return v_array
 
 
@@ -112,24 +114,24 @@ def main():
     for line in fileinput.FileInput(files=filepath, inplace=not DEBUG):
         if len(line.strip()) == 0:
             print(line, end='')
-            
+
         elif line.find(IFNDEF) > 0:
             print(line, end='')
-                                        
+
         elif line.find(VERSIONHEXMATCH) > 0:
-            versionlist = regex_hex.findall(line)     
+            versionlist = regex_hex.findall(line)
             if len(v_array) and len(versionlist):
-                versionhex = ["%02x" %i for i in v_array]
+                versionhex = ["%02d" % i for i in v_array]
                 new_version = ''.join(versionhex)
                 line = regex_hex.sub('0x' + new_version, line)
                 print(line, end='')
-            
+
         elif line.find(VERSIONMATCH) > 0:
             version = regex_quotes.findall(line)
             v_array = versionsplit(version)
             new_version = '.'.join(str(i) for i in v_array)
             line = regex_quotes.sub('"' + new_version + '"', line)
-            print(line, end='')            
+            print(line, end='')
 
         elif line.find(GITMATCH) > 0:
             line = regex_quotes.sub('"' + shashort + '"', line)
