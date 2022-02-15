@@ -23,6 +23,10 @@ extern "C" {
 #define VERSION    "0.3.2"
 #endif
 
+#ifndef VERSIONHEX
+#define VERSIONHEX 0x000302
+#endif
+
 #ifndef BUILD_DATE
 #define BUILD_DATE "2022-02-02"
 #endif
@@ -44,14 +48,14 @@ import re
 import os
 from datetime import date
 
-FILEPATH        = ""
-FILENAME        = "version.h"
-IFNDEF          = "ifndef"
-VERSIONMATCH    = "VERSION"
+FILEPATH = ""
+FILENAME = "version.h"
+IFNDEF = "ifndef"
+VERSIONMATCH = "VERSION"
 VERSIONHEXMATCH = "VERSIONHEX"
-GITMATCH        = "GIT_SHA"
-DATEMATCH       = "BUILD_DATE"
-DEBUG           = False
+GITMATCH = "GIT_SHA"
+DATEMATCH = "BUILD_DATE"
+DEBUG = False
 
 
 def versionsplit(version):    
